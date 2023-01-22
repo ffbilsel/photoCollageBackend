@@ -4,17 +4,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-public class UploadService {
+public class FileService {
 
-    private static final String UPLOADED_FOLDER = "C:\\Users\\fatih\\Downloads\\temp";
+    public static final String UPLOADED_FOLDER = "C:\\Users\\fatih\\Downloads\\temp";
 
-    public void fileUpload(MultipartFile file,
+    public void uploadFile(MultipartFile file,
                            RedirectAttributes redirectAttributes) {
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
@@ -24,7 +25,7 @@ public class UploadService {
         try {
 
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Path path = Paths.get(UPLOADED_FOLDER + "\\" + file.getOriginalFilename());
             Files.write(path, bytes);
 
             redirectAttributes.addFlashAttribute("message",
@@ -34,4 +35,9 @@ public class UploadService {
             e.printStackTrace();
         }
     }
+
+    public boolean deleteFile(String filename) {
+        return new File(UPLOADED_FOLDER + filename).delete();
+    }
+
 }

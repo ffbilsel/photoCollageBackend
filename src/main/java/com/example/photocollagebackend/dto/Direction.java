@@ -1,2 +1,5 @@
-package com.example.photocollagebackend.dto;public enum Direction {
+package com.example.photocollagebackend.dto;
+
+public enum Direction {
+    H, V
 }
